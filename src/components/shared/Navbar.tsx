@@ -14,9 +14,10 @@ interface NavbarProps {
 export default function Navbar({
   planCount = 0,
   savedCount = 0,
-  currentPath = "/workouts",
+  currentPath = "/",
 }: NavbarProps) {
-  const isWorkoutsActive = currentPath === "/workouts" || currentPath === "/";
+  const isWorkoutsActive =
+    currentPath === "/" || currentPath.startsWith("/workouts");
   const isMyPlanActive = currentPath === "/my-plan";
 
   return (
@@ -37,7 +38,7 @@ export default function Navbar({
 
         <nav className="hidden lg:flex items-center gap-2">
           <Link
-            href="/workouts"
+            href="/"
             className={`px-4 py-2 rounded-full text-[12px] font-semibold transition-all duration-200 ${
               isWorkoutsActive
                 ? "bg-[#1f270d] text-[#ccff00]"
@@ -59,13 +60,12 @@ export default function Navbar({
           </Link>
         </nav>
 
-        {/* Right Side Status Badges - for Desktop  */}
         <div className="hidden lg:flex items-center gap-4">
           <PlanBadge count={planCount} />
           <SavedBadge count={savedCount} />
         </div>
 
-        {/* Right Side Hamburger -  */}
+        {/*  Mobile Menu */}
         <MobileMenu
           planCount={planCount}
           savedCount={savedCount}
