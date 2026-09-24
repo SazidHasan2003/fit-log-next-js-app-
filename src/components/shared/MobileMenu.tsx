@@ -16,13 +16,11 @@ export default function MobileMenu({ planCount, savedCount }: MobileMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
-  // Dynamic active link calculation
   const isWorkoutsActive = pathname === "/" || pathname.startsWith("/workouts");
   const isMyPlanActive = pathname === "/my-plan";
 
   return (
     <div className="lg:hidden">
-      {/* React Icons Feather Menu / Close Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="p-2 text-gray-300 hover:text-white focus:outline-none text-2xl"
@@ -31,7 +29,6 @@ export default function MobileMenu({ planCount, savedCount }: MobileMenuProps) {
         {isOpen ? <FiX /> : <FiMenu />}
       </button>
 
-      {/* Mobile Menu Overlay / Dropdown Drawer */}
       {isOpen && (
         <div className="absolute top-[72px] left-0 w-full bg-[#121316] border-b border-gray-800 p-6 flex flex-col gap-6 shadow-xl z-50">
           <nav className="flex flex-col gap-3">
