@@ -4,22 +4,14 @@ import logo from "@/assets/logo.png";
 import PlanBadge from "./PlanBadge";
 import SavedBadge from "./SavedBadge";
 import MobileMenu from "./MobileMenu";
+import NavLinks from "./NavLinks";
 
 interface NavbarProps {
   planCount?: number;
   savedCount?: number;
-  currentPath?: string;
 }
 
-export default function Navbar({
-  planCount = 0,
-  savedCount = 0,
-  currentPath = "/",
-}: NavbarProps) {
-  const isWorkoutsActive =
-    currentPath === "/" || currentPath.startsWith("/workouts");
-  const isMyPlanActive = currentPath === "/my-plan";
-
+export default function Navbar({ planCount = 0, savedCount = 0 }: NavbarProps) {
   return (
     <header className="w-full bg-[#121316] text-white border-b border-gray-800 relative">
       <div className="max-w-[1280px] mx-auto px-[24px] h-[72px] flex items-center justify-between">
@@ -36,42 +28,15 @@ export default function Navbar({
           </span>
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-2">
-          <Link
-            href="/"
-            className={`px-4 py-2 rounded-full text-[12px] font-semibold transition-all duration-200 ${
-              isWorkoutsActive
-                ? "bg-[#1f270d] text-[#ccff00]"
-                : "text-gray-400 hover:text-white"
-            }`}
-          >
-            Workouts
-          </Link>
-
-          <Link
-            href="/my-plan"
-            className={`px-4 py-2 rounded-full text-[12px] font-semibold transition-all duration-200 ${
-              isMyPlanActive
-                ? "bg-[#1f270d] text-[#ccff00]"
-                : "text-gray-400 hover:text-white"
-            }`}
-          >
-            My Plan
-          </Link>
-        </nav>
+        <NavLinks />
 
         <div className="hidden lg:flex items-center gap-4">
           <PlanBadge count={planCount} />
           <SavedBadge count={savedCount} />
         </div>
 
-        {/*  Mobile Menu */}
-        <MobileMenu
-          planCount={planCount}
-          savedCount={savedCount}
-          isWorkoutsActive={isWorkoutsActive}
-          isMyPlanActive={isMyPlanActive}
-        />
+        {/* Mobile Menu */}
+        <MobileMenu planCount={planCount} savedCount={savedCount} />
       </div>
     </header>
   );

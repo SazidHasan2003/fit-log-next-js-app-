@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { FiMenu, FiX } from "react-icons/fi";
 import PlanBadge from "./PlanBadge";
 import SavedBadge from "./SavedBadge";
@@ -9,17 +10,15 @@ import SavedBadge from "./SavedBadge";
 interface MobileMenuProps {
   planCount: number;
   savedCount: number;
-  isWorkoutsActive: boolean;
-  isMyPlanActive: boolean;
 }
 
-export default function MobileMenu({
-  planCount,
-  savedCount,
-  isWorkoutsActive,
-  isMyPlanActive,
-}: MobileMenuProps) {
+export default function MobileMenu({ planCount, savedCount }: MobileMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+
+  // Dynamic active link calculation
+  const isWorkoutsActive = pathname === "/" || pathname.startsWith("/workouts");
+  const isMyPlanActive = pathname === "/my-plan";
 
   return (
     <div className="lg:hidden">
@@ -37,7 +36,7 @@ export default function MobileMenu({
         <div className="absolute top-[72px] left-0 w-full bg-[#121316] border-b border-gray-800 p-6 flex flex-col gap-6 shadow-xl z-50">
           <nav className="flex flex-col gap-3">
             <Link
-              href="/workouts"
+              href="/"
               onClick={() => setIsOpen(false)}
               className={`px-4 py-2 rounded-full text-[14px] font-semibold text-center transition-all duration-200 ${
                 isWorkoutsActive
