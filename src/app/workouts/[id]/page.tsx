@@ -7,7 +7,7 @@ import WorkoutActions from "./WorkoutActions";
 async function getSingleWorkout(id: string): Promise<IDataType | null> {
   try {
     const response = await fetch(
-      `https://api.abcz.workers.dev/api/fitlog/${id}`,
+      ` https://api.api-store.workers.dev/api/fitlog/${id}`,
       { cache: "no-store" },
     );
     if (!response.ok) return null;

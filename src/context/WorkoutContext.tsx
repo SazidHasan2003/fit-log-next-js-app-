@@ -25,11 +25,15 @@ export const WorkoutProvider = ({ children }: { children: ReactNode }) => {
   const [planList, setPlanList] = useState<IDataType[]>([]);
   const [savedList, setSavedList] = useState<IDataType[]>([]);
 
-  // Directly manage boolean state to resolve unused setter ESLint warning
   const isLoading = false;
 
-  // Add to Today's Plan
+  // Add to Today's Plan (With 5 Lifts Cap Guard)
   const addToPlan = (workout: IDataType) => {
+    if (planList.length >= 5) {
+      toast.error("You cannot add more than 5 lifts to today's plan!");
+      return;
+    }
+
     const exists = planList.some(
       (item: IDataType) => String(item.id) === String(workout.id),
     );
