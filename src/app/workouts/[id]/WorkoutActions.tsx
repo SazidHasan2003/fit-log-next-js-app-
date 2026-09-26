@@ -15,7 +15,7 @@ export default function WorkoutActions({ workout }: { workout: IDataType }) {
     <div className="flex flex-wrap items-center gap-3 pt-2">
       <button
         onClick={() => addToPlan(workout)}
-        className={`font-extrabold text-[13px] px-5 py-3 rounded-xl inline-flex items-center gap-2 transition-colors uppercase tracking-wide ${
+        className={`font-semibold text-[13px] sm:text-[14px] px-6 py-3 rounded-xl inline-flex items-center gap-2 transition-all ${
           inPlan
             ? "bg-gray-800 text-gray-400 cursor-not-allowed border border-gray-700"
             : "bg-[#ccff00] hover:bg-[#b8e600] text-black"
@@ -31,7 +31,7 @@ export default function WorkoutActions({ workout }: { workout: IDataType }) {
 
       <button
         onClick={() => addToSaved(workout)}
-        className={`border font-extrabold text-[13px] px-5 py-3 rounded-xl inline-flex items-center gap-2 transition-colors uppercase tracking-wide ${
+        className={`border font-semibold text-[13px] sm:text-[14px] px-6 py-3 rounded-xl inline-flex items-center gap-2 transition-all ${
           inSaved
             ? "bg-gray-800 text-gray-400 border-gray-700 cursor-not-allowed"
             : "bg-[#121316] border-gray-800 hover:border-gray-700 text-white"

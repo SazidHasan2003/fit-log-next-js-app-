@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { FiArrowLeft } from "react-icons/fi";
 import { IDataType } from "@/types/type";
 import WorkoutActions from "./WorkoutActions";
 
@@ -11,8 +10,8 @@ async function getSingleWorkout(id: string): Promise<IDataType | null> {
       `https://api.abcz.workers.dev/api/fitlog/${id}`,
       { cache: "no-store" },
     );
-    const data = await response.json();
-    return data;
+    if (!response.ok) return null;
+    return await response.json();
   } catch (error) {
     console.error("Error fetching single workout:", error);
     return null;
@@ -31,19 +30,29 @@ export default async function WorkoutDetailPage({
     notFound();
   }
 
+  const specs = [
+    { label: "EQUIPMENT", value: workout.equipment },
+    { label: "DIFFICULTY", value: workout.difficulty },
+    { label: "SETS", value: workout.sets },
+    { label: "REPS", value: workout.reps },
+    { label: "DURATION", value: `${workout.duration} min` },
+    { label: "CALORIES", value: `${workout.caloriesBurned} kcal` },
+    { label: "RATING", value: workout.rating },
+  ];
+
   return (
-    <main className="w-full my-[40px] lg:my-[64px]">
+    <main className="w-full my-[32px] lg:my-[48px]">
       <div className="max-w-[1280px] mx-auto px-[24px]">
         <Link
           href="/"
           className="inline-flex items-center gap-2 text-gray-400 hover:text-white mb-6 text-[14px] font-medium transition-colors"
         >
-          <FiArrowLeft className="text-base" />
+          <span className="text-lg">←</span>
           <span>Back to Workouts</span>
         </Link>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
-          <div className="relative w-full h-[350px] sm:h-[450px] lg:h-[520px] rounded-2xl overflow-hidden bg-gray-900 border border-gray-800/80">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start bg-[#0d0d0f] p-4 sm:p-6 lg:p-8 rounded-3xl border border-gray-800/60">
+          <div className="relative w-full h-[380px] sm:h-[480px] lg:h-[580px] rounded-2xl overflow-hidden bg-gray-900 border border-gray-800/80">
             <Image
               src={workout.image}
               alt={workout.name}
@@ -56,7 +65,7 @@ export default async function WorkoutDetailPage({
 
           <div className="flex flex-col gap-6">
             <div>
-              <h1 className="text-white text-[32px] sm:text-[40px] font-black uppercase tracking-tight leading-tight">
+              <h1 className="text-white text-[32px] sm:text-[38px] font-black uppercase tracking-tight leading-tight">
                 {workout.name}
               </h1>
               <p className="text-gray-400 text-[14px] sm:text-[15px] mt-2 font-normal leading-relaxed">
@@ -68,77 +77,41 @@ export default async function WorkoutDetailPage({
               {workout.muscleGroups?.map((group, index) => (
                 <span
                   key={index}
-                  className="bg-[#ccff00] text-black text-[11px] font-black uppercase px-3 py-1 rounded-full tracking-wider"
+                  className="bg-[#ccff00] text-black text-[12px] font-bold px-3 py-1 rounded-full"
                 >
                   {group}
                 </span>
               ))}
             </div>
 
-            <div className="bg-[#121316] border border-gray-800/80 rounded-xl p-4 sm:p-5 divide-y divide-gray-800/60 text-[13px] sm:text-[14px]">
-              <div className="flex justify-between py-2.5">
-                <span className="text-gray-400 font-semibold uppercase tracking-wider text-[11px]">
-                  EQUIPMENT
-                </span>
-                <span className="text-white font-medium">
-                  {workout.equipment}
-                </span>
-              </div>
-              <div className="flex justify-between py-2.5">
-                <span className="text-gray-400 font-semibold uppercase tracking-wider text-[11px]">
-                  DIFFICULTY
-                </span>
-                <span className="text-white font-medium">
-                  {workout.difficulty}
-                </span>
-              </div>
-              <div className="flex justify-between py-2.5">
-                <span className="text-gray-400 font-semibold uppercase tracking-wider text-[11px]">
-                  SETS
-                </span>
-                <span className="text-white font-medium">{workout.sets}</span>
-              </div>
-              <div className="flex justify-between py-2.5">
-                <span className="text-gray-400 font-semibold uppercase tracking-wider text-[11px]">
-                  REPS
-                </span>
-                <span className="text-white font-medium">{workout.reps}</span>
-              </div>
-              <div className="flex justify-between py-2.5">
-                <span className="text-gray-400 font-semibold uppercase tracking-wider text-[11px]">
-                  DURATION
-                </span>
-                <span className="text-white font-medium">
-                  {workout.duration} min
-                </span>
-              </div>
-              <div className="flex justify-between py-2.5">
-                <span className="text-gray-400 font-semibold uppercase tracking-wider text-[11px]">
-                  CALORIES
-                </span>
-                <span className="text-white font-medium">
-                  {workout.caloriesBurned} kcal
-                </span>
-              </div>
-              <div className="flex justify-between py-2.5">
-                <span className="text-gray-400 font-semibold uppercase tracking-wider text-[11px]">
-                  RATING
-                </span>
-                <span className="text-white font-medium">{workout.rating}</span>
-              </div>
+            <div className="bg-[#121316] border border-gray-800/80 rounded-2xl p-4 sm:p-5 overflow-hidden">
+              <table className="w-full text-left border-collapse">
+                <tbody className="divide-y divide-gray-800/60 text-[13px] sm:text-[14px]">
+                  {specs.map((spec, index) => (
+                    <tr key={index} className="first:pt-0 last:pb-0">
+                      <td className="py-2.5 text-gray-400 font-semibold uppercase tracking-wider text-[11px] align-middle">
+                        {spec.label}
+                      </td>
+                      <td className="py-2.5 text-white font-medium text-right align-middle">
+                        {spec.value}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
 
             <div>
-              <h3 className="text-white text-[16px] font-extrabold uppercase tracking-wider mb-3">
+              <h3 className="text-white text-[15px] font-extrabold uppercase tracking-wider mb-3">
                 INSTRUCTIONS
               </h3>
-              <ol className="flex flex-col gap-2.5">
+              <ol className="flex flex-col gap-2.5 list-none">
                 {workout.instructions?.map((step, idx) => (
                   <li
                     key={idx}
-                    className="text-gray-400 text-[13px] sm:text-[14px] leading-relaxed flex gap-2"
+                    className="text-gray-300 text-[13px] sm:text-[14px] leading-relaxed flex gap-2.5"
                   >
-                    <span className="text-gray-300 font-semibold">
+                    <span className="text-gray-400 font-semibold select-none">
                       {idx + 1}.
                     </span>
                     <span>{step}</span>
