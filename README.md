@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🏋️ FitLog - Workout Management Platform
 
-## Getting Started
+A modern, high-performance web application designed to help fitness enthusiasts track, plan, and manage their daily workout routines effortlessly. Built with Next.js App Router for optimal server-side performance and smooth client interactivity.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🛠️ Technologies Used
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Framework:** Next.js (App Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
+- **Icons:** React Icons
+- **Notifications:** React Toastify
+- **Deployment & Hosting:** Cloudflare Workers (API backend)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## ✨ Key Features
 
-## Learn More
+1. **⚡ Server-Side Data Fetching & Caching**
+   Utilizes Next.js Server Components to fetch workout routines directly from external APIs with automated ISR/SSG caching for instant page loads.
 
-To learn more about Next.js, take a look at the following resources:
+2. **🎯 Strict 5-Lift Daily Plan Cap**
+   Implements a strict 5-lift constraint per daily routine to prevent overtraining, featuring dynamic UI button states and informative Toast warnings.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. **📌 Dual-State Routine Tracking**
+   Leverages React Context (`WorkoutContext`) to seamlessly manage both active daily items and saved workouts without UI state loss or unnecessary re-renders.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+4. **🔄 Dynamic Interactive Workflows**
+   Allows users to instantly mark workouts as completed or remove items from active lists with real-time UI synchronization and feedback notifications.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+5. **📱 Fully Responsive Dark UI**
+   Designed with a sleek, high-contrast dark theme optimized for desktop grids as well as mobile-friendly responsive interactions.
