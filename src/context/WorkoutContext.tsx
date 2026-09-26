@@ -7,12 +7,16 @@ import { toast } from "react-toastify";
 interface WorkoutContextType {
   planList: IDataType[];
   savedList: IDataType[];
+  planItems: IDataType[];
+  savedItems: IDataType[];
   addToPlan: (workout: IDataType) => void;
   removeFromPlan: (id: string | number) => void;
   addToSaved: (workout: IDataType) => void;
   removeFromSaved: (id: string | number) => void;
+  markAsDone: (id: string | number) => void;
   isItemInPlan: (id: string | number) => boolean;
   isItemInSaved: (id: string | number) => boolean;
+  isLoading: boolean;
 }
 
 const WorkoutContext = createContext<WorkoutContextType | undefined>(undefined);
@@ -20,6 +24,9 @@ const WorkoutContext = createContext<WorkoutContextType | undefined>(undefined);
 export const WorkoutProvider = ({ children }: { children: ReactNode }) => {
   const [planList, setPlanList] = useState<IDataType[]>([]);
   const [savedList, setSavedList] = useState<IDataType[]>([]);
+
+  // Directly manage boolean state to resolve unused setter ESLint warning
+  const isLoading = false;
 
   // Add to Today's Plan
   const addToPlan = (workout: IDataType) => {
@@ -40,6 +47,14 @@ export const WorkoutProvider = ({ children }: { children: ReactNode }) => {
       prev.filter((item: IDataType) => String(item.id) !== String(id)),
     );
     toast.info("Removed from today's plan");
+  };
+
+  // Mark workout as done (completes & removes from plan)
+  const markAsDone = (id: string | number) => {
+    setPlanList((prev: IDataType[]) =>
+      prev.filter((item: IDataType) => String(item.id) !== String(id)),
+    );
+    toast.success("Workout completed!");
   };
 
   // Add to Save for Later
@@ -75,12 +90,16 @@ export const WorkoutProvider = ({ children }: { children: ReactNode }) => {
       value={{
         planList,
         savedList,
+        planItems: planList,
+        savedItems: savedList,
         addToPlan,
         removeFromPlan,
         addToSaved,
         removeFromSaved,
+        markAsDone,
         isItemInPlan,
         isItemInSaved,
+        isLoading,
       }}
     >
       {children}
