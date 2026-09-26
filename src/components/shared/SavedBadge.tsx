@@ -1,12 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import { useWorkoutContext } from "@/context/WorkoutContext";
 
-interface SavedBadgeProps {
-  count?: number;
-}
+export default function SavedBadge() {
+  const { savedList } = useWorkoutContext();
 
-export default function SavedBadge({ count = 0 }: SavedBadgeProps) {
   return (
     <Link
       href="/my-plan"
@@ -14,7 +13,7 @@ export default function SavedBadge({ count = 0 }: SavedBadgeProps) {
     >
       <span>Saved</span>
       <span className="border border-gray-600 text-gray-300 w-6 h-6 rounded-full flex items-center justify-center text-[12px] font-bold">
-        {count}
+        {savedList.length}
       </span>
     </Link>
   );

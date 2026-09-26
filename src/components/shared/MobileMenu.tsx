@@ -7,12 +7,7 @@ import { FiMenu, FiX } from "react-icons/fi";
 import PlanBadge from "./PlanBadge";
 import SavedBadge from "./SavedBadge";
 
-interface MobileMenuProps {
-  planCount: number;
-  savedCount: number;
-}
-
-export default function MobileMenu({ planCount, savedCount }: MobileMenuProps) {
+export default function MobileMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
@@ -58,8 +53,8 @@ export default function MobileMenu({ planCount, savedCount }: MobileMenuProps) {
           </nav>
 
           <div className="flex items-center justify-around border-t border-gray-800 pt-4">
-            <PlanBadge count={planCount} />
-            <SavedBadge count={savedCount} />
+            <PlanBadge />
+            <SavedBadge />
           </div>
         </div>
       )}

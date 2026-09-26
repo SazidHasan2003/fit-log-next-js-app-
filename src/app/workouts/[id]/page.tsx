@@ -1,8 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { FiPlusSquare, FiBookmark, FiArrowLeft } from "react-icons/fi";
+import { FiArrowLeft } from "react-icons/fi";
 import { IDataType } from "@/types/type";
+import WorkoutActions from "./WorkoutActions";
 
 async function getSingleWorkout(id: string): Promise<IDataType | null> {
   try {
@@ -33,7 +34,6 @@ export default async function WorkoutDetailPage({
   return (
     <main className="w-full my-[40px] lg:my-[64px]">
       <div className="max-w-[1280px] mx-auto px-[24px]">
-        {/* Back to Home Link */}
         <Link
           href="/"
           className="inline-flex items-center gap-2 text-gray-400 hover:text-white mb-6 text-[14px] font-medium transition-colors"
@@ -42,9 +42,7 @@ export default async function WorkoutDetailPage({
           <span>Back to Workouts</span>
         </Link>
 
-        {/* Details Grid Container */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
-          {/*  Large Image */}
           <div className="relative w-full h-[350px] sm:h-[450px] lg:h-[520px] rounded-2xl overflow-hidden bg-gray-900 border border-gray-800/80">
             <Image
               src={workout.image}
@@ -56,9 +54,7 @@ export default async function WorkoutDetailPage({
             />
           </div>
 
-          {/* Right Side: Information & Instructions */}
           <div className="flex flex-col gap-6">
-            {/* Title & Description */}
             <div>
               <h1 className="text-white text-[32px] sm:text-[40px] font-black uppercase tracking-tight leading-tight">
                 {workout.name}
@@ -68,7 +64,6 @@ export default async function WorkoutDetailPage({
               </p>
             </div>
 
-            {/* Muscle Badges */}
             <div className="flex flex-wrap gap-2">
               {workout.muscleGroups?.map((group, index) => (
                 <span
@@ -133,7 +128,6 @@ export default async function WorkoutDetailPage({
               </div>
             </div>
 
-            {/* Instructions Section */}
             <div>
               <h3 className="text-white text-[16px] font-extrabold uppercase tracking-wider mb-3">
                 INSTRUCTIONS
@@ -153,17 +147,7 @@ export default async function WorkoutDetailPage({
               </ol>
             </div>
 
-            {/* Action Buttons */}
-            <div className="flex flex-wrap items-center gap-3 pt-2">
-              <button className="bg-[#ccff00] hover:bg-[#b8e600] text-black font-extrabold text-[13px] px-5 py-3 rounded-xl inline-flex items-center gap-2 transition-colors uppercase tracking-wide">
-                <FiPlusSquare className="text-base" />
-                <span>Add to today&apos;s plan</span>
-              </button>
-              <button className="bg-[#121316] border border-gray-800 hover:border-gray-700 text-white font-extrabold text-[13px] px-5 py-3 rounded-xl inline-flex items-center gap-2 transition-colors uppercase tracking-wide">
-                <FiBookmark className="text-base" />
-                <span>Save for later</span>
-              </button>
-            </div>
+            <WorkoutActions workout={workout} />
           </div>
         </div>
       </div>
